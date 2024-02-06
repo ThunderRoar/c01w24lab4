@@ -1,10 +1,17 @@
+
 import './App.css';
 
-const Note = ({entry, editNote, deleteNote}) => {
+const Note = ({entry, editNote, deleteNote, onChangeColor}) => {
+
+    const handleColorChange = (event) => {
+        const newColor = event.target.value;
+        onChangeColor(entry._id, newColor);
+    };
 
     return (
-        <div style={NoteStyle.note}>
+        <div style={{...NoteStyle.note, backgroundColor: entry.color || 'grey'}}>
             <p style={NoteStyle.text}>{entry.title}</p>
+                <input type="color" onChange={handleColorChange} value={entry.color || 'grey'} />
                 <button
                     onClick={() => editNote(entry)}
                     >
