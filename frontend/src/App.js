@@ -38,7 +38,6 @@ function App() {
   }, []);
 
   const deleteNote = async (entry) => {
-    deleteNoteState(entry._id);
 
     try {
       const response = await fetch(
@@ -53,7 +52,11 @@ function App() {
 
       if (!response.ok) {
         console.log("Server failed to delete the note:", response.status);
-      }
+      } else {
+        await response.json().then(() => {
+          deleteNoteState(entry._id);
+        }) 
+      } 
     } catch (error) {
       console.error("Delete function failed:", error);
     }
