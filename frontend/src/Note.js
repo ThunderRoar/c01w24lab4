@@ -30,7 +30,8 @@ const NoteStyle = {
       borderStyle: 'dotted',
       borderRadius: '30px',
       borderWidth: 'thin',
-      overflowWrap: "break-word"
+      overflowWrap: "break-word",
+      backgroundColor: "orange"
     },
     text: {
       margin: "0px"
