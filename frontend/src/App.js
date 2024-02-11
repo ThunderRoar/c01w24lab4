@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Dialog from "./Dialog";
 import Note from "./Note";
+import NoteSearch from "./NoteSearch";
 
 function App() {
   // -- Backend-related state --
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState(undefined);
 
-  // -- Dialog props--
+  // -- Dialog props-- 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogNote, setDialogNote] = useState(null);
-
+  const [searchQuery, setSearchQuery] = useState("");
+  
   // -- Database interaction functions --
   useEffect(() => {
     const getNotes = async () => {
@@ -159,6 +161,13 @@ function App() {
     );
   };
 
+
+  const filteredNotes = searchQuery
+  ? notes.filter(note =>
+      note.title.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  : notes;
+
   return (
     <div className="App">
       <header className="App-header">
@@ -166,25 +175,22 @@ function App() {
           <h1 style={AppStyle.title}>QuirkNotes</h1>
           <h4 style={AppStyle.text}>The best note-taking app ever </h4>
 
+          <NoteSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
           <div style={AppStyle.notesSection}>
-            {loading ? (
-              <>Loading...</>
-            ) : notes ? (
-              notes.map((entry) => {
-                return (
-                  <div key={entry._id}>
-                    <Note
-                      entry={entry}
-                      editNote={editNote}
-                      deleteNote={deleteNote}
-                      onChangeColor={onChangeColor}
-                    />
-                  </div>
-                );
-              })
-            ) : (
-              <div style={AppStyle.notesError}>
-                Something has gone horribly wrong! We can't get the notes!
+            {loading ?
+            <>Loading...</>
+            : 
+            filteredNotes ?
+            filteredNotes.map((entry) => {
+              return (
+              <div key={entry._id}>
+                <Note
+                entry={entry} 
+                editNote={editNote} 
+                deleteNote={deleteNote}
+                onChangeColor={onChangeColor}
+                />
               </div>
             )}
           </div>
