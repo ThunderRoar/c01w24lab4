@@ -1,0 +1,3 @@
+The bug in note deletion was caused by 2 issues in the frontend and backend:
+1. In the backend, /deleteNote/ was not implemented
+2. In the frontend, deleteNoteState was being called before checking backend success in the deleteNote function.
