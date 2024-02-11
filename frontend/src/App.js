@@ -192,7 +192,13 @@ function App() {
                 onChangeColor={onChangeColor}
                 />
               </div>
-            )}
+            )})
+            : 
+            <div style={AppStyle.notesError}>
+                Something has gone horribly wrong!
+                We can't get the notes!
+            </div>
+            }
           </div>
 
           <button onClick={postNote}>Post Note</button>
