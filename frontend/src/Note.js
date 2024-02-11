@@ -1,6 +1,12 @@
+
 import './App.css';
 
-const Note = ({entry, editNote, deleteNote}) => {
+const Note = ({entry, editNote, deleteNote, onChangeColor}) => {
+
+    const handleColorChange = (event) => {
+        const newColor = event.target.value;
+        onChangeColor(entry._id, newColor);
+    };
 
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -8,11 +14,12 @@ const Note = ({entry, editNote, deleteNote}) => {
     };
 
     return (
-        <div style={NoteStyle.note}>
+        <div style={{...NoteStyle.note, backgroundColor: entry.color || 'grey'}}>
             <span style={{ fontSize: '0.75rem', display: 'block', marginBottom: '5px' }}>
                 {formatDate(entry.createdAt)}
             </span>
             <p style={NoteStyle.text}>{entry.title}</p>
+                <input type="color" onChange={handleColorChange} value={entry.color || 'grey'} />
                 <button
                     onClick={() => editNote(entry)}
                     >
